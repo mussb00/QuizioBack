@@ -4,10 +4,10 @@ const mongoose = require('mongoose')
 // mongo adds id property by default
 const userSchema = new mongoose.Schema({
     username: String,
-    // email: String,
-    // hash: String,
-    // total_games: Number,
-    // total_scores: Number
+    email: String,
+    hashed_password: String,
+    total_games: Number,
+    total_scores: Number
 })
 
 // create User Class
