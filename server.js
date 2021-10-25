@@ -6,6 +6,7 @@ app.use(express.json())
 const port = process.env.PORT || 3000
 const userRoutes = require('./Controllers/userRoutes')
 const authRoutes = require('./Controllers/authRoutes')
+const {verifyToken} = require('./Middleware/auth')
 
 const io = require('socket.io')(8080, {
     cors: {
@@ -27,6 +28,7 @@ io.on('connection', socket => {
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
 app.get('/', (req, res)=>{res.send('hellooooo')})
+app.use(verifyToken)
 
 app.listen(port, ()=>{
     console.log('server is running on port', port)

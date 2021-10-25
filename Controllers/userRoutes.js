@@ -40,4 +40,22 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.patch('/:email', async (req, res) => {
+    try {
+        await mongoose.connect(process.env.CONNECTION_URL)
+
+        const user = await User.updateOne({email: req.params.email}, {$inc: {
+        total_games: 1,
+        total_scores: req.body.total_scores
+        }})
+        
+        res.send(user)
+        disconnect()
+
+    } catch (err) {
+        console.log(err)
+        res.status(404).send(err)
+    }
+} )
+
 module.exports = router
