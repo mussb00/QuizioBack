@@ -60,12 +60,14 @@ router.post('/register', async (req, res) => {
         //     return res.send(result)
         // }
 
-
+        console.log('1')
         await mongoose.connect(process.env.CONNECTION_URL)
+        console.log('2')
         const salt = await bcrypt.genSalt();
         const hashed = await bcrypt.hash(req.body.password, salt);
         const username = req.body.username
         const email = req.body.email;
+        
 
         // NEED TO CHECK IF EMAIL ALREADY EXISTS
         // const invalidEmail = await User.find({email:email})
