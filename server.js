@@ -15,6 +15,12 @@ const io = require('socket.io')(8080, {
 
 io.on('connection', socket => {
     console.log(socket.id)
+
+    socket.on('join-room', (room, id) => {
+        socket.join(room)
+
+        socket.to(room).emit('joined', id, room)
+    })
 })
 
 //middleware
