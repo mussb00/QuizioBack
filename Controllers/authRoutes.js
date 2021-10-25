@@ -15,18 +15,17 @@ router.post('/login', async (req, res) => {
         await mongoose.connect(process.env.CONNECTION_URL)
         //add validation so email unique
         const user = await User.find({email: req.body.email})
-        console.log(user)
+        // console.log(user)
         if (!user[0]) { 
             throw new Error('No user with this email')
         }
-        console.log(req.body.password)
-        console.log(user[0].hashed_password)
+        // console.log(req.body.password)
+        // console.log(user[0].hashed_password)
         const authed = await bcrypt.compare(req.body.password, user[0].hashed_password);
-        console.log(authed)
+        // console.log(authed)
         if (authed) {
             const payload = { name: user[0].username, email: user[0].email }
-            console.log(payload);
-            console.log(process.env.ACCESS_TOKEN_SECRET)
+            // console.log(payload);
             const sendToken = (err, token) => {
                 if (err) { throw new Error('Error in token generation') }
                 res.status(200).json({

@@ -6,8 +6,18 @@ app.use(express.json())
 const port = process.env.PORT || 3000
 const userRoutes = require('./Controllers/userRoutes')
 const authRoutes = require('./Controllers/authRoutes')
-//middleware
 
+const io = require('socket.io')(8080, {
+    cors: {
+        origin: ['http://localhost:3001']
+    }
+})
+
+io.on('connection', socket => {
+    console.log(socket.id)
+})
+
+//middleware
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
 app.get('/', (req, res)=>{res.send('hellooooo')})
