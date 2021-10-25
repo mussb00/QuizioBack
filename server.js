@@ -21,6 +21,7 @@ io.on('connection', socket => {
         socket.join(room)
 
         socket.to(room).emit('joined', id, room)
+        //cb(`Joined ${room}`)
     })
 })
 
