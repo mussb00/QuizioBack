@@ -15,15 +15,25 @@ const io = require('socket.io')(8080, {
 })
 
 io.on('connection', socket => {
-    console.log(socket.id)
+    
 
     socket.on('join-room', (room, str) => {
         socket.join(room)
+        let number = io.sockets.adapter.rooms.get(room).size
 
-        socket.to(room).emit('joined', str)
+        io.in(room).emit('joined', str, number)
         //cb(`Joined ${room}`)
     })
+
+    socket.on('disconnecting', () => {
+
+        const roomName = [...socket.rooms].pop()
+        let guests = io.sockets.adapter.rooms.get(roomName).size-1
+        io.in(roomName).emit('userLeft', guests)
+    })
+
 })
+
 
 //middleware
 app.use('/user', userRoutes)
