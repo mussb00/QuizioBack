@@ -5,8 +5,8 @@ const dotenv = require('dotenv');
 app.use(cors())
 app.use(express.json())
 
-const userRoutes = require('./Controllers/userRoutes')
-const authRoutes = require('./Controllers/authRoutes')
+const userRoutes = require('./Routes/userRoutes')
+const authRoutes = require('./Routes/authRoutes')
 const {verifyToken} = require('./Middleware/auth')
 
 const io = require('socket.io')(8080, {
