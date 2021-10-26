@@ -18,10 +18,10 @@ const io = require('socket.io')(8080, {
 io.on('connection', socket => {
    console.log(socket.id)
 
-    socket.on('join-room', (room, id) => {
+    socket.on('join-room', (room, str) => {
         socket.join(room)
 
-        socket.to(room).emit('joined', id, room)
+        socket.to(room).emit('joined', str)
         //cb(`Joined ${room}`)
     })
 })
