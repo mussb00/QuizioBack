@@ -19,3 +19,7 @@ Content-Type: application/json
 GET http://localhost:3000/user/Betty
 Content-Type: application/json
 
+### 
+Get http://localhost:3000/user/leaderboard
+Content-Type: application/json
+

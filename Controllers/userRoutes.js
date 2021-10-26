@@ -9,33 +9,15 @@ const joi = require('joi')
 // needed to parse data as a json, not string
 router.use(express.json())
 
-
-// find user by username
-router.get('/:username', async (req, res) => {
-    try {
-        // connect()
-        await mongoose.connect(process.env.CONNECTION_URL)
-        const user  = await User.find({username: req.params.username})
-        res.status(200).send(user)
-        disconnect()
-    } catch (err) {
-        // console.log('failed')
-        res.status(404).send('User does not exist')
-    }
-})
-
-// create new user and store in db
-router.post('/', async (req, res) => {
+router.get('/leaderboard', async (req, res) =>{
     try{
         await mongoose.connect(process.env.CONNECTION_URL)
-        const newUser = new User({
-            username: req.body.username
-        })
-        console.log(newUser)
-        await newUser.save()
-        disconnect()
+        const allUsers = await User.find()
+        // orders score from highest to lowest
+        const orderedList = allUsers.map(user => user.total_scores).sort((a,b)=> b-a)
+        const topFive = orderedList.slice(0,5)
+        res.send(topFive)
     } catch (err) {
-        console.log(err)
         res.status(404).send(err)
     }
 })
@@ -56,6 +38,6 @@ router.patch('/:email', async (req, res) => {
         console.log(err)
         res.status(404).send(err)
     }
-} )
+})
 
 module.exports = router
