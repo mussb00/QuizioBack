@@ -17,13 +17,13 @@ const io = require('socket.io')(8080, {
 
 io.on('connection', socket => {
     
-    let count = 10000; // 10s
-    socket.on('question-load', ()=>{
-        io.sockets.emit('timer', count);
-    })
-    socket.on('reset', () => {
-        io.sockets.emit('timer', count);
-    })
+    // let count = 10000; // 10s
+    // socket.on('question-load', ()=>{
+    //     io.sockets.emit('timer', count);
+    // })
+    // socket.on('reset', () => {
+    //     io.sockets.emit('timer', count);
+    // })
 
     socket.on('join-room', (room, str, email) => {
         socket.join(room)
