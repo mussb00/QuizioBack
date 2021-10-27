@@ -44,6 +44,10 @@ io.on('connection', socket => {
         socket.to(room).emit('questions', questions)
     })
 
+    socket.on('send-scores', (room, score) => {
+        socket.to(room).emit('receive-questions', score)
+    })
+
 })
 
 

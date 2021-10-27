@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     email: String,
     hashed_password: String,
     total_games: Number,
-    total_scores: Number
+    total_scores: Number,
+    last_score: Number
 })
 
 // create User Class
