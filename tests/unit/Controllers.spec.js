@@ -1,7 +1,7 @@
 
 const {User} = require('../../dbConfig/init.js')
 const userControllers = require('../../Controllers/userControllers')
-const authControllers = require('../../Controllers/authControllers')
+//const authControllers = require('../../Controllers/authControllers')
 
 
 

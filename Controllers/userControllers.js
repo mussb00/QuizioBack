@@ -7,9 +7,10 @@ const router = express.Router()
 const joi = require('joi')
 
 
-router.get('/leaderboard', async (req, res) => {
+//router.get('/leaderboard', async (req, res) => {
+    async function leaderboard(req, res) {
     try {
-        await mongoose.connect(process.env.CONNECTION_URL)
+    //    await mongoose.connect(process.env.CONNECTION_URL)
         const allUsers = await User.find()
         // orders score from highest to lowest
         const orderedList = allUsers.map(user => user.total_scores).sort((a, b) => b - a)
@@ -21,9 +22,11 @@ router.get('/leaderboard', async (req, res) => {
 }
 
 
-router.get('/:emails', async (req, res) => {
+// router.get('/:emails', async (req, res) => {
+    async function getRoomScores(req, res) {
     try {
-        await mongoose.connect(process.env.CONNECTION_URL)
+
+    //    await mongoose.connect(process.env.CONNECTION_URL)
         const emailString = req.params.emails
         const emailArray = emailString.split('*')
         
@@ -34,11 +37,12 @@ router.get('/:emails', async (req, res) => {
     } catch (err) {
         res.status(404).send(err)
     }
-})
+}
 
-router.patch('/:email', async (req, res) => {
+//router.patch('/:email', async (req, res) => {
+    async function update(req, res) {   
     try {
-        await mongoose.connect(process.env.CONNECTION_URL)
+   //     await mongoose.connect(process.env.CONNECTION_URL)
 
         const user = await User.updateOne({ email: req.params.email }, {
             $inc: {
@@ -57,4 +61,4 @@ router.patch('/:email', async (req, res) => {
     }
 }
 
-module.exports = {update, leaderboard}
+module.exports = {update, leaderboard, getRoomScores}

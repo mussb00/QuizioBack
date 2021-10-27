@@ -26,9 +26,9 @@ describe("Auth tests", () => {
           console.log("connected to test db");
         }
       );
-      //ensure that we start with no info in db
-    const Users =  await User.find();
-    console.log('test', Users)
+     
+   // const Users =  await User.find();
+   // console.log('test', Users)
     });
     afterAll(async () => {
       //close connections after test suite runs
@@ -53,9 +53,11 @@ it("can register  new user", async () =>{
       .set("Content-Type", "application/json")
     .expect(201)
     expect(res.body).toHaveProperty("newUser");
+    const token = res.headers['auth-token']
+
   });
 
-  
+  /*
   it("can not register  new user with no valid email", async () =>{
     const res =await request(api)
     .post("/auth/register")
@@ -66,18 +68,30 @@ it("can register  new user", async () =>{
         .set("Content-Type", "application/json")
       .expect(500)
     });
+    */
     
     it("allows login of existing user", async () => {
+      // create new user
       const testUser = await request(api)
         .post('/auth/register')
         .send({
-          email: 'testlogin@test.com',
-          
-          password: 'qwerty'
-        })
+          email:"test5@test.com",
+          username:"testuser5",
+          password:"qwerty" })
+          .set("Content-Type", "application/json")
+
         // need to add token??
-        .set("Content-Type", "application/json");
-        expect(res.statusCode).toEqual(200);
+
+        // then login
+        const res = await request(api)
+        .post('/auth/login')
+        .send({
+          email:"test5@test.com",
+          password:"qwerty" })
+          .set("Content-Type", "application/json")
+          .expect(200)
+          
+        
 
 });
 
