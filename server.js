@@ -5,26 +5,10 @@ const dotenv = require('dotenv');
 app.use(cors())
 app.use(express.json())
 
+
 const userRoutes = require('./Routes/userRoutes')
 const authRoutes = require('./Routes/authRoutes')
 const {verifyToken} = require('./Middleware/auth')
-
-const io = require('socket.io')(8080, {
-    cors: {
-        origin: ['http://localhost:3001']
-    }
-})
-
-io.on('connection', socket => {
-   console.log(socket.id)
-
-    socket.on('join-room', (room, str) => {
-        socket.join(room)
-
-        socket.to(room).emit('joined', str)
-        //cb(`Joined ${room}`)
-    })
-})
 
 //middleware
 app.use('/user', userRoutes)
