@@ -25,11 +25,11 @@ io.on('connection', socket => {
         io.sockets.emit('timer', count);
     })
 
-    socket.on('join-room', (room, str) => {
+    socket.on('join-room', (room, str, email) => {
         socket.join(room)
         let number = io.sockets.adapter.rooms.get(room).size
 
-        io.in(room).emit('joined', str, number)
+        io.in(room).emit('joined', str, number, email)
         //cb(`Joined ${room}`)
     })
 
