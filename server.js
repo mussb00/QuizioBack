@@ -33,6 +33,10 @@ io.on('connection', socket => {
         io.in(roomName).emit('userLeft', guests)
     })
 
+    socket.on('send-questions', (room, questions) => {
+        socket.to(room).emit('questions', questions)
+    })
+
 })
 
 
