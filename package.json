@@ -7,9 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
     "test": "jest --watch-all --coverage --verbose"
-    
   },
   "repository": {
     "type": "git",

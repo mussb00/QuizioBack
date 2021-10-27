@@ -1,5 +1,6 @@
 const app = require('./server')
 const mongoose = require('mongoose')
+const port = process.env.PORT || 3000
 
 
 const {verifyToken} = require('./Middleware/auth')
