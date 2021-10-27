@@ -12,7 +12,7 @@ router.use(express.json())
 
 router.post('/login', async (req, res) => {
     try {
-        await mongoose.connect(process.env.CONNECTION_URL)
+       // await mongoose.connect(process.env.CONNECTION_URL)  // moved to server entrypoint index.js
         //add validation so email unique
         const user = await User.find({email: req.body.email})
         // console.log(user)
@@ -59,7 +59,7 @@ router.post('/register', async (req, res) => {
         //     return res.send(result)
         // }
 
-        await mongoose.connect(process.env.CONNECTION_URL)
+      //  await mongoose.connect(process.env.CONNECTION_URL)
         const salt = await bcrypt.genSalt();
         const hashed = await bcrypt.hash(req.body.password, salt);
         const username = req.body.username

@@ -16,7 +16,7 @@ describe("Auth tests", () => {
     beforeAll(async () => {
       //launch server
       api = app.listen(5000, () => console.log("test server launched on 5000"));
-      //then connect to test db
+      //connect to test db
       mongoose.connect(
         process.env.TEST_CONNECTION_URL,
         {
@@ -27,7 +27,8 @@ describe("Auth tests", () => {
         }
       );
       //ensure that we start with no info in db
-      await User.deleteMany({});
+    const Users =  await User.find();
+    console.log('test', Users)
     });
     afterAll(async () => {
       //close connections after test suite runs
@@ -43,24 +44,41 @@ it("gets to  home '/'  with code 200", async () =>{
 
 
 it("can register  new user", async () =>{
-  const res = await (await request(api)
-  .post("/user/register")
+  const res = await request(api)
+  .post("/auth/register")
   .send({
-      email:"test@test.com",
-      username:"testuser",
+      email:"test4@test.com",
+      username:"testuser4",
       password:"qwerty" })
       .set("Content-Type", "application/json")
-    .expect(201))
+    .expect(201)
+    expect(res.body).toHaveProperty("newUser");
   });
+
+  
   it("can not register  new user with no valid email", async () =>{
-    const res = await (await request(api)
-    .post("/user/register")
+    const res =await request(api)
+    .post("/auth/register")
     .send({
         email:"test",
         username:"testuser",
         password:"qwerty" })
         .set("Content-Type", "application/json")
-      .expect(201))
+      .expect(500)
     });
+    
+    it("allows login of existing user", async () => {
+      const testUser = await request(api)
+        .post('/auth/register')
+        .send({
+          email: 'testlogin@test.com',
+          
+          password: 'qwerty'
+        })
+        // need to add token??
+        .set("Content-Type", "application/json");
+        expect(res.statusCode).toEqual(200);
 
 });
+
+})
