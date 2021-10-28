@@ -12,14 +12,14 @@ router.use(express.json())
 
 router.post('/login', async (req, res) => {
     try {
-       // await mongoose.connect(process.env.CONNECTION_URL)  // moved to server entrypoint index.js
+        await mongoose.connect(process.env.CONNECTION_URL)  // moved to server entrypoint index.js
         //add validation so email unique
         const user = await User.find({email: req.body.email})
         // console.log(user)
         if (!user[0]) { 
             throw new Error('No user with this email')
         }
-        // console.log(req.body.password)
+        console.log("password ",req.body.password)
         // console.log(user[0].hashed_password)
         const authed = await bcrypt.compare(req.body.password, user[0].hashed_password);
         // console.log(authed)
@@ -59,7 +59,9 @@ router.post('/register', async (req, res) => {
         //     return res.send(result)
         // }
 
-      //  await mongoose.connect(process.env.CONNECTION_URL)
+        console.log("Server URL1", process.env.CONNECTION_URL);
+
+        await mongoose.connect(process.env.CONNECTION_URL)
         const salt = await bcrypt.genSalt();
         const hashed = await bcrypt.hash(req.body.password, salt);
         const username = req.body.username
@@ -81,6 +83,7 @@ router.post('/register', async (req, res) => {
         return res.status(201).json({ newUser });
     } catch (err) {
         res.status(500).json({ err });
+        console.log("xxxxxxxxxx",err)
     }
 })
 
