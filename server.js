@@ -11,7 +11,7 @@ const {verifyToken} = require('./Middleware/auth')
 
 const io = require('socket.io')(8080, {
     cors: {
-        origin: ['http://localhost:3001']
+        origin: ['https://quizioapp.netlify.app']
     }
 })
 
