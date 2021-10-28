@@ -32,6 +32,10 @@ io.on('connection', socket => {
         },100)
     })
 
+    socket.on('send-emails', (room, emails) => {
+        io.in(room).emit('emails', emails)
+    })
+
     socket.on('join-room', (room, str, email) => {
         socket.join(room)
         let number = io.sockets.adapter.rooms.get(room).size

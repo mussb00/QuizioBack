@@ -46,9 +46,9 @@ router.patch('/:email', async (req, res) => {
             $inc: {
                 total_games: 1,
                 total_scores: req.body.total_scores
-            }
-        },
-            { last_score: req.body.total_scores })
+            },
+             last_score: req.body.total_scores })
+        
 
         res.send(user)
         disconnect()
