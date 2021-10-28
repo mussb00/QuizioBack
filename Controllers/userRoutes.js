@@ -19,8 +19,8 @@ router.get('/leaderboard', async (req, res) => {
         // const orderedList = allUsers.map(user => user.total_scores).sort((a, b) => b - a)
         // const topFive = orderedList.slice(0, 5)
         // res.send(topFive)
-    } catch (err) {
-        res.status(404).send(err)
+    } catch (error) {
+        res.status(404).send(error)
     }
 })
 
