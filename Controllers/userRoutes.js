@@ -32,8 +32,7 @@ router.get('/:emails', async (req, res) => {
         
         const usersInRoom = await Promise.all(emailArray.map(email => User.findOne({email: email})))
         console.log(usersInRoom)
-        const roomScores = usersInRoom.map(data => data.last_score)
-        res.send(roomScores)
+        res.send(usersInRoom)
     } catch (err) {
         res.status(404).send(err)
     }
@@ -43,13 +42,15 @@ router.patch('/:email',verifyToken, async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
 
-        const user = await User.updateOne({ email: req.params.email }, {
+        let user = await User.updateOne({ email: req.params.email }, {
             $inc: {
                 total_games: 1,
-                total_scores: req.body.total_scores
+                total_scores: req.body.game_score
             }
-        },
-            { last_score: req.body.total_scores })
+        })
+
+        user = await User.updateOne({email:req.params.email},
+            {last_score: req.body.game_score})
 
         res.send(user)
         disconnect()
