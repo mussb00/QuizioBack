@@ -12,7 +12,7 @@ router.use(express.json())
 router.get('/leaderboard', async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
-        const usersWithScores = await User.find({total_scores: {$ne : null}})
+        const usersWithScores = await (await User.find({total_scores: {$ne : null}}).sort({total_scores:-1})).slice(0,5)
         res.send(usersWithScores)
         // orders score from highest to lowest
         // const orderedList = allUsers.map(user => user.total_scores).sort((a, b) => b - a)
