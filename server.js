@@ -17,18 +17,19 @@ const io = require('socket.io')(8080, {
 
 io.on('connection', socket => {
     
-    
-    socket.on('question-load', (room) => {
+    socket.on('question-load', () => {
         let count = 10000;
+        
         const timer = setInterval(() => {
             socket.emit('timer', count)
-            count -= 1000
+            count -= 100
             if (count === 0) {
                 clearInterval(timer)
                 socket.emit('next-question')
                 
+                
             }
-        },1000)
+        },100)
     })
 
     socket.on('join-room', (room, str, email) => {
