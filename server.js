@@ -17,12 +17,19 @@ const io = require('socket.io')(8080, {
 
 io.on('connection', socket => {
     
-    let count = 10000; // 10s
-    socket.on('question-load', ()=>{
-        io.sockets.emit('timer', count);
-    })
-    socket.on('reset', () => {
-        io.sockets.emit('timer', count);
+    socket.on('question-load', () => {
+        let count = 10000;
+        
+        const timer = setInterval(() => {
+            socket.emit('timer', count)
+            count -= 100
+            if (count === 0) {
+                clearInterval(timer)
+                socket.emit('next-question')
+                
+                
+            }
+        },100)
     })
 
     socket.on('join-room', (room, str, email) => {
@@ -54,7 +61,7 @@ io.on('connection', socket => {
 //middleware
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
-app.get('/', (req, res)=>{res.send('hellooooo')})
+app.get('/', (req, res)=>{res.send('Welcome to our Quiz API!')})
 app.use(verifyToken)
 
 
