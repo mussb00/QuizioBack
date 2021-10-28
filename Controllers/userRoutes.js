@@ -5,6 +5,7 @@ const express = require('express')
 require('dotenv').config()
 const router = express.Router()
 const joi = require('joi')
+const { verifyToken } = require('../Middleware/auth')
 
 // needed to parse data as a json, not string
 router.use(express.json())
@@ -38,7 +39,7 @@ router.get('/:emails', async (req, res) => {
     }
 })
 
-router.patch('/:email', async (req, res) => {
+router.patch('/:email',verifyToken, async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
 
