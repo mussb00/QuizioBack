@@ -30,7 +30,6 @@ router.get('/:emails', async (req, res) => {
         const emailArray = emailString.split('*')
         
         const usersInRoom = await Promise.all(emailArray.map(email => User.findOne({email: email})))
-        console.log(usersInRoom)
         res.send(usersInRoom)
     } catch (err) {
         res.status(404).send(err)
