@@ -1,6 +1,6 @@
 const { User } = require('../dbConfig/init')
 const mongoose = require('mongoose')
-const { connect, disconnect } = require('../Middleware/connections')
+const { disconnect } = require('../Middleware/connections')
 const express = require('express')
 require('dotenv').config()
 const router = express.Router()
