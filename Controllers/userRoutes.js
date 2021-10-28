@@ -1,10 +1,11 @@
 const { User } = require('../dbConfig/init')
 const mongoose = require('mongoose')
-const { connect, disconnect } = require('../Middleware/connections')
+const { disconnect } = require('../Middleware/connections')
 const express = require('express')
 require('dotenv').config()
 const router = express.Router()
 const joi = require('joi')
+const { verifyToken } = require('../Middleware/auth')
 
 // needed to parse data as a json, not string
 router.use(express.json())
@@ -12,7 +13,11 @@ router.use(express.json())
 router.get('/leaderboard', async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
-        const usersWithScores = await User.find({total_scores: {$ne : null}})
+<<<<<<< HEAD
+        const usersWithScores = await (await User.find({total_scores: {$ne : null}}).sort({total_scores:-1})).slice(0,5)
+=======
+        const usersWithScores = await User.find({total_scores: {$ne : null}}).sort({total_scores: -1})
+>>>>>>> b54dd755628526dcfaa61a240a2d964b09795f0f
         res.send(usersWithScores)
         // orders score from highest to lowest
         // const orderedList = allUsers.map(user => user.total_scores).sort((a, b) => b - a)
@@ -30,14 +35,13 @@ router.get('/:emails', async (req, res) => {
         const emailArray = emailString.split('*')
         
         const usersInRoom = await Promise.all(emailArray.map(email => User.findOne({email: email})))
-        console.log(usersInRoom)
         res.send(usersInRoom)
     } catch (err) {
         res.status(404).send(err)
     }
 })
 
-router.patch('/:email', async (req, res) => {
+router.patch('/:email',verifyToken, async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
 

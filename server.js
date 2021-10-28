@@ -11,7 +11,7 @@ const {verifyToken} = require('./Middleware/auth')
 
 const io = require('socket.io')(8080, {
     cors: {
-        origin: ['http://localhost:3001']
+        origin: ['https://quizioapp.netlify.app']
     }
 })
 
@@ -30,6 +30,10 @@ io.on('connection', socket => {
                 
             }
         },100)
+    })
+
+    socket.on('send-emails', (room, emails) => {
+        io.in(room).emit('emails', emails)
     })
 
     socket.on('join-room', (room, str, email) => {
