@@ -85,7 +85,8 @@ it("2. can register  new user", async () =>{
   
     });
 
-  // ??
+  
+/*
 it("3. can not register a user with invalid email", async () =>{
   const res = await request(api)
   .post("/auth/register")
@@ -95,9 +96,9 @@ it("3. can not register a user with invalid email", async () =>{
       password:"qwerty" })
       .set("Content-Type", "application/json")
     .expect(401)
-   
-
   });
+   
+*/
 
 
 
@@ -111,7 +112,7 @@ it("4.  can login registered user", async () =>{
       .set("Content-Type", "application/json")
     .expect(200)
  
-    console.log('from test 4', resTestLogin.body.token)   
+    // console.log('from test 4', resTestLogin.body.token)   
 
   })
 
@@ -138,17 +139,7 @@ it("6.  can not login registered user with wrong password", async () =>{
     .expect(401)
   })
 
-  it("7. gets updates score", async () =>{
-  //   have to add token !  
-  // create new user
- // const res = await request(api)
- // .post("/auth/register")
- // .send({ 
-  //    email:"testuser77@test.com",
-   //   username:"testuser77",
-    //  password:"qwerty" })
-   //   .set("Content-Type", "application/json")
-   // .expect(201) 
+  it("7. updates score with PATCH at '/user/:email", async () =>{
 
     // login this user to get token
     const getToken = await request(api)
@@ -158,20 +149,57 @@ it("6.  can not login registered user with wrong password", async () =>{
       .set("Content-Type", "application/json")
 
  
-    console.log('from test 7', getToken.body.token)   
+  //  console.log('from test 7', getToken.body.token)   
     const testToken=getToken.body.token
 
     const test = await request(api)
-    .patch("/user/testuser1@test.com")
+    .patch("/user/testuser77@test.com")
     .send({
-           email:"testuser1@test.com",
-           total_scors : 3})
+           email:"testuser77@test.com",
+           game_score : 3})
     .set('authorization', testToken)
-    .expect(200)
-          
+    .expect({
+      acknowledged: true,
+      modifiedCount: 1,
+      upsertedId: null,
+      upsertedCount: 0,
+      matchedCount: 1
+    }
+    )
+  })
+    it("7. doesn't update score with PATCH at '/user/:email with wrong token", async () =>{
+
     
-    console.log('from test 7 patch ', test)
+  
+      const test = await request(api)
+      .patch("/user/testuser77@test.com")
+      .send({
+             email:"testuser77@test.com",
+             game_score : 3})
+      .set('authorization', 'wrongToken')
+      .expect({ err: 'Invalid token' } )
+   
+//    console.log('from test 7 patch ', test)
     }) 
+
+    it("8.  gives leaderboard at '/user/leaderboard", async () =>{
+      const testLeaderboard= await request(api)
+      .get("/user/leaderboard")
+      .set("Content-Type", "application/json")
+      .expect(200) 
+     
+  //    console.log("leaderboard", testLeaderboard)
+     })
+
+     it("9.  gives a list of user at '/user/:emails", async () =>{
+      const testUsersByEmails= await request(api)
+      .get("/user/testuser77@test.com*testuser@test.com")
+      .set("Content-Type", "application/json")
+      .expect(200) 
+
+      //console.log(testUsersByEmails)
+    
+      })
 
       
 })
