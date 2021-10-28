@@ -61,7 +61,7 @@ io.on('connection', socket => {
 //middleware
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
-app.get('/', (req, res)=>{res.send('hellooooo')})
+app.get('/', (req, res)=>{res.send('Welcome to our Quiz API!')})
 app.use(verifyToken)
 
 
