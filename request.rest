@@ -23,3 +23,10 @@ Content-Type: application/json
 Get http://localhost:3000/user/leaderboard
 Content-Type: application/json
 
+###
+PATCH http://localhost:3000/user/dim@dim.com
+Content-Type: application/json
+
+{
+    "game_score": 3
+}
