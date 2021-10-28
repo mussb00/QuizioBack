@@ -1,10 +1,11 @@
 const { User } = require('../dbConfig/init')
 const mongoose = require('mongoose')
-const { connect, disconnect } = require('../Middleware/connections')
+const { disconnect } = require('../Middleware/connections')
 const express = require('express')
 require('dotenv').config()
 const router = express.Router()
 const joi = require('joi')
+const { verifyToken } = require('../Middleware/auth')
 
 // needed to parse data as a json, not string
 router.use(express.json())
@@ -12,7 +13,7 @@ router.use(express.json())
 router.get('/leaderboard', async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
-        const usersWithScores = await User.find({total_scores: {$ne : null}})
+        const usersWithScores = await User.find({total_scores: {$ne : null}}).sort({total_scores: -1})
         res.send(usersWithScores)
         // orders score from highest to lowest
         // const orderedList = allUsers.map(user => user.total_scores).sort((a, b) => b - a)
@@ -36,7 +37,7 @@ router.get('/:emails', async (req, res) => {
     }
 })
 
-router.patch('/:email', async (req, res) => {
+router.patch('/:email',verifyToken, async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
 
