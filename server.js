@@ -4,7 +4,7 @@ const app = express()
 const dotenv = require('dotenv');
 app.use(cors())
 app.use(express.json())
-const server = require('http').createServer(app)
+export const server = require('http').createServer(app)
 
 const userRoutes = require('./Controllers/userRoutes')
 const authRoutes = require('./Controllers/authRoutes')
@@ -76,4 +76,4 @@ app.use(verifyToken)
 //    console.log('server is running on port', port)
 // })
 
-module.exports = app
+module.exports = {app, server}
