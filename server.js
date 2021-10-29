@@ -17,7 +17,6 @@ const io = require('socket.io')(server, {
         methods: ['GET', 'POST', 'PATCH']
     }
 })
-io.set('origins', '*:*')
 
 io.on('connection', socket => {
     
