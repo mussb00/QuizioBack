@@ -4,7 +4,7 @@ const app = express()
 const dotenv = require('dotenv');
 app.use(cors())
 app.use(express.json())
-export const server = require('http').createServer(app)
+const server = require('http').createServer(app)
 
 const userRoutes = require('./Controllers/userRoutes')
 const authRoutes = require('./Controllers/authRoutes')
