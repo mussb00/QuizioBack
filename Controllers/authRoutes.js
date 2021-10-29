@@ -14,7 +14,9 @@ router.post('/login', async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
         //add validation so email unique
+        console.log('1')
         const user = await User.find({email: req.body.email})
+        console.log('2')
         // console.log(user)
         if (!user[0]) { 
             throw new Error('No user with this email')
@@ -22,6 +24,7 @@ router.post('/login', async (req, res) => {
         // console.log(req.body.password)
         // console.log(user[0].hashed_password)
         const authed = await bcrypt.compare(req.body.password, user[0].hashed_password);
+        console.log('3')
         // console.log(authed)
         if (authed) {
             const payload = { name: user[0].username, email: user[0].email }
