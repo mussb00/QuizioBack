@@ -12,7 +12,7 @@ router.use(express.json())
 
 router.get('/leaderboard', async (req, res) => {
     try {
-        await mongoose.connect(process.env.CONNECTION_URL, {
+        await mongoose.connect('mongodb+srv://mussie:quizioback@cluster0.hhnk4.mongodb.net/quizioback', {
             useUnifiedTopology: true,
             useNewUrlParser: true,
             useFindAndModify: false
