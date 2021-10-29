@@ -12,7 +12,7 @@ const authRoutes = require('./Controllers/authRoutes')
 const {verifyToken} = require('./Middleware/auth')
 
 
-const io = require('socket.io')(process.env.PORT, {
+const io = require('socket.io')( {
     cors: {
         origin: '*:*',
         methods: ['GET', 'POST', 'PATCH']
