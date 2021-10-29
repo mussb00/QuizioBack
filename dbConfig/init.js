@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
 })
 
 // create User Class
-const User = mongoConnection.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
 
 module.exports = {User}
