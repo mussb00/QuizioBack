@@ -13,7 +13,7 @@ const {verifyToken} = require('./Middleware/auth')
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: '*',
+        origin: '*:*',
         methods: ['GET', 'POST', 'PATCH']
     }
 })
