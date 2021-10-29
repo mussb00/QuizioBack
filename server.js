@@ -76,4 +76,4 @@ app.use(verifyToken)
 //    console.log('server is running on port', port)
 // })
 
-module.exports = {app, server}
+module.exports = app
