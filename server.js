@@ -68,7 +68,6 @@ io.on('connection', socket => {
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
 app.get('/', (req, res)=>{res.send('Welcome to our Quiz API!')})
-app.use(verifyToken)
 
 
 //    moved this to index.js

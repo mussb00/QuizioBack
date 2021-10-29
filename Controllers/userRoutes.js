@@ -10,7 +10,7 @@ const { verifyToken } = require('../Middleware/auth')
 // needed to parse data as a json, not string
 router.use(express.json())
 
-router.get('/leaderboard', async (req, res) => {
+router.get('/leaderboard', verifyToken, async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
         const usersWithScores = await  User.find({total_scores: {$ne : null}}).sort({total_scores:-1}).limit(5)
