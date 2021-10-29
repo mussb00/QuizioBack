@@ -14,6 +14,7 @@ router.post('/login', async (req, res) => {
     try {
         await mongoose.connect(process.env.CONNECTION_URL)
         //add validation so email unique
+        // console.log('heyyyy')
         const user = await User.find({email: req.body.email})
         // console.log(user)
         if (!user[0]) { 
