@@ -1,17 +1,18 @@
 const express = require('express')
 const cors = require('cors')
+const port = process.env.PORT || 8080
 const app = express()
 const dotenv = require('dotenv');
 app.use(cors())
 app.use(express.json())
-const server = require('http').createServer(app)
+// const server = require('http').createServer(app)
 
 const userRoutes = require('./Controllers/userRoutes')
 const authRoutes = require('./Controllers/authRoutes')
 const {verifyToken} = require('./Middleware/auth')
 
 
-const io = require('socket.io')(server, {
+const io = require('socket.io')(port, {
     cors: {
         origin: '*:*',
         methods: ['GET', 'POST', 'PATCH']
