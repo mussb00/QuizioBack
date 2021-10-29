@@ -1,10 +1,5 @@
 const mongoose = require('mongoose')
 
-const mongoConnection = mongoose.createConnection(process.env.CONNECTION_URL, {
-   useUnifiedTopology: true,
-   useNewUrlParser: true,
-   useFindAndModify: false });
-    
 // create schema
 // mongo adds id property by default
 const userSchema = new mongoose.Schema({
