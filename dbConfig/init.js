@@ -1,5 +1,11 @@
 const mongoose = require('mongoose')
+mongoose.set('useCreateIndex', true);
 
+const mongoConnection = mongoose.createConnection(process.env.CONNECTION_URL, {
+   useUnifiedTopology: true,
+   useNewUrlParser: true,
+   useFindAndModify: false });
+    
 // create schema
 // mongo adds id property by default
 const userSchema = new mongoose.Schema({
@@ -12,7 +18,7 @@ const userSchema = new mongoose.Schema({
 })
 
 // create User Class
-const User = mongoose.model('User', userSchema)
+const User = mongoConnection.model('User', userSchema)
 
 
 module.exports = {User}
