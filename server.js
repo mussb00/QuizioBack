@@ -4,12 +4,14 @@ const app = express()
 const dotenv = require('dotenv');
 app.use(cors())
 app.use(express.json())
+const server = require('http').createServer(app)
 
 const userRoutes = require('./Controllers/userRoutes')
 const authRoutes = require('./Controllers/authRoutes')
 const {verifyToken} = require('./Middleware/auth')
 
-const io = require('socket.io')( {
+
+const io = require('socket.io')(server, {
     cors: {
         origin: ['https://quizioapp.netlify.app']
     }
