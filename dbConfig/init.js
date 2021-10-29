@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-mongoose.set('useCreateIndex', true);
 
 const mongoConnection = mongoose.createConnection(process.env.CONNECTION_URL, {
    useUnifiedTopology: true,
