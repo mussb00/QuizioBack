@@ -11,7 +11,7 @@ const authRoutes = require('./Controllers/authRoutes')
 const {verifyToken} = require('./Middleware/auth')
 
 
-const io = require('socket.io')(server, {
+const io = require('socket.io')(80, {
     cors: {
         origin: ['https://quizioapp.netlify.app']
     }
